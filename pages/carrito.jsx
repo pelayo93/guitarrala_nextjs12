@@ -1,4 +1,6 @@
 import { useEffect, useState } from 'react'
+import { Toaster, toast } from 'sonner'
+
 import Image from 'next/image'
 import Layout from '../components/layaout'
 import styles from '../styles/carrito.module.css'
@@ -10,15 +12,21 @@ function Carrito ({ carrito, actualizarCantidad, eliminarProducto }) {
     setTotal(calculoTotal)
   }, [carrito])
 
+  const Confirmar = (id) => {
+    eliminarProducto(id)
+    toast.success('Producto Retirado del Carrito de Compra')
+  }
+
   return (
     <Layout>
+      <Toaster position='top-center' richColors />
       <main className='contenedor'>
         <h1 className='heading'>Carrito</h1>
         <div className={styles.contenido}>
           <div className={styles.carrito}>
             <h2>Articulos</h2>
             {carrito.lenght === 0
-              ? 'Carrito Vacio'
+              ? 'Carrito de Compra Vacio'
               : (
                   carrito.map(producto => (
                     <div className={styles.producto} key={producto.id}>
@@ -51,7 +59,7 @@ function Carrito ({ carrito, actualizarCantidad, eliminarProducto }) {
                       <button
                         className={styles.eliminar}
                         type='button'
-                        onClick={() => eliminarProducto(producto.id)}
+                        onClick={() => Confirmar(producto.id)}
                       >X
                       </button>
                     </div>

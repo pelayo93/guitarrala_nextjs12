@@ -2,6 +2,7 @@ import { useState } from 'react'
 import Image from 'next/image'
 import styles from '../../styles/guitarras.module.css'
 import Layout from '../../components/layaout'
+import { Toaster, toast } from 'sonner'
 
 // PRIMERO ANTES QUE TODO EL NOMBRE DE LA CARPETA ES EL NOMBRE DEL END POINT EN ESTE CASO
 // ME EQUIVOQUE EN LA API SIN DARME CUENTA Y EL ERROR ES QUE ERA GUIATARRAS Y NO GUITARRAS
@@ -13,7 +14,7 @@ function Producto ({ guitarra, agregarCarrito }) {
   const handleSubmit = e => {
     e.preventDefault()
     if (cantidad < 1) {
-      alert('Cantidad no valida')
+      toast.error('Cantidad no Valida')
       return
     }
     // Contruir un Objeto para el carrito
@@ -26,11 +27,13 @@ function Producto ({ guitarra, agregarCarrito }) {
     }
     // Pasando informacion al context
     agregarCarrito(guitarraSeleccionada)
+    toast.success('Producto Agregado al Carrito')
   }
   return (
     <Layout
       title={`Guitarra ${nombre}`}
     >
+      <Toaster position='top-center' richColors />
       <div className={styles.guitarra}>
         <Image src={imagen.data.attributes.url} width={600} height={400} alt={`Imagen guitarra ${nombre}`} />
 
